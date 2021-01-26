@@ -32,5 +32,5 @@ public class BoardWriteServlet extends HttpServlet {
 		
 		response.sendRedirect("/list");
 	}
-
 }
+

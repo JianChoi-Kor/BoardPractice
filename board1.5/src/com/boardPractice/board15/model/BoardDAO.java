@@ -15,7 +15,7 @@ public class BoardDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT i_board, title, r_dt FROM board15";
+		String sql = "SELECT i_board, title, r_dt FROM board15 ORDER BY i_board DESC";
 		
 		try {
 			con = DbUtils.getCon();
@@ -42,6 +42,40 @@ public class BoardDAO {
 		return list;
 	}
 	
+	public static BoardEntity selBoard(BoardEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT title, ctnt FROM board15 WHERE i_board = ?";
+		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				int i_board = param.getI_board();
+				String title = rs.getString("title");
+				String ctnt = rs.getString("ctnt");
+				
+				BoardEntity data = new BoardEntity();
+				data.setI_board(i_board);
+				data.setTitle(title);
+				data.setCtnt(ctnt);
+				
+				return data;
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps, rs);
+		}
+		return null;
+	}
+	
 	public static void insBoard(BoardEntity param) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -60,5 +94,26 @@ public class BoardDAO {
 			DbUtils.close(con, ps);
 		}
 	}
+	
+	public static void delBoard(BoardEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = "DELETE FROM board15 WHERE i_board = ?";
+		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps);
+		}
+	}
+	
+	
 }
 
