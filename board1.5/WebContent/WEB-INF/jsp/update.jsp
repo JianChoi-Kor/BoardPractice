@@ -7,6 +7,14 @@
 <title>Update Page</title>
 </head>
 <body>
-	
+	<form action="/update" method="post">
+		<input type="hidden" name="i_board" value="${param.i_board}">
+		<div><input type="text" name="title" placeholder="제목" value="${data.title}"></div>
+		<div><textarea name="ctnt">${data.ctnt}</textarea></div>
+		<div>
+			<input type="submit" value="글 수정">
+			<input type="reset" value="다시 작성">
+		</div>
+	</form>
 </body>
 </html>
