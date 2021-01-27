@@ -24,3 +24,4 @@ public class BoardListServlet extends HttpServlet {
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}
 }
+
