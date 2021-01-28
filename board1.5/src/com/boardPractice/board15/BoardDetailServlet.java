@@ -30,3 +30,4 @@ public class BoardDetailServlet extends HttpServlet {
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}
 }
+

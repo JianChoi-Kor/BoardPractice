@@ -22,7 +22,9 @@
 		<c:forEach items="${requestScope.list}" var="item">	
 			<tr>
 				<td>${pageScope.item.i_board}</td>
+				
 				<td><a href="/detail?i_board=${pageScope.item.i_board}">${pageScope.item.title}</a></td>
+				
 				<td>${pageScope.item.r_dt}</td>
 			</tr>
 		</c:forEach>
