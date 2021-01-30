@@ -27,3 +27,5 @@ public class BoardDelServlet extends HttpServlet {
 		response.sendRedirect("/list");
 	}
 }
+
+
