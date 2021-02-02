@@ -44,5 +44,5 @@ public class BoardUpdateServlet extends HttpServlet {
 		
 		response.sendRedirect("/detail?i_board="+strI_board);
 	}
-
 }
+
