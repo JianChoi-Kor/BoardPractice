@@ -8,18 +8,20 @@ import java.util.List;
 
 public class BoardDAO {
 	// 리스트를 받아와서 저장하는 메서드
-	public static List<BoardEntity> selBoardList() {
+	public static List<BoardEntity> selBoardList(BoardDTO param) {
 		List<BoardEntity> list = new ArrayList<>();
 		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT i_board, title, r_dt FROM board15 ORDER BY i_board DESC";
+		String sql = "SELECT i_board, title, r_dt FROM board15 ORDER BY i_board DESC LIMIT ?, ?;";
 		
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getStartIdx());
+			ps.setInt(2, param.getRowCountPerPage());
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -134,6 +136,30 @@ public class BoardDAO {
 		} finally {
 			DbUtils.close(con, ps);
 		}
+	}
+	
+	public static int selPageLength(BoardDTO param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT CEIL(count(i_board)/?) FROM board15";
+		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getRowCountPerPage());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps, rs);
+		}
+		return 0;
 	}
 	
 }
